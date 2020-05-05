@@ -1,0 +1,6 @@
+scrapy startproject <projectname>
+scrapy genspider <spidername> <url(without protocol>
+remove ending / from start url and allowed domains in code
+scrapy crawl <spidername> -o filename.<format=json,csv,xml>
+scrapy shell "<url>"
+response.fetch(url) then use xpath/css
