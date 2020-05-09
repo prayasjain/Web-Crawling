@@ -6,7 +6,28 @@
 # https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
+from scrapy.downloadermiddlewares.useragent import UserAgentMiddleware
+import random, logging
 
+class UserAgentRotatorMiddleware(UserAgentMiddleware):
+    user_agent_list =[
+        'user_agent_1',
+        'user_agent_2',
+        'user_agent_3',
+        'user_agent_4',
+        'user_agent_5',
+        'user_agent_6',
+    ]
+
+    def __init__(self, user_agent=''):
+        self.user_agent = user_agent
+    
+    def process_request(self, request, spider):
+        try:
+            self.user_agent = random.choice(self.user_agent_list)
+            request.headers.setdefault('User-Agent', self.user_agent)
+        except IndexError:
+            logging.error("couldnt fetch user agent")
 
 class DemoLoginSpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,
